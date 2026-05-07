@@ -22,31 +22,40 @@ export default function KeluhanKlinik() {
 
   return (
     <div>
-      <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm mb-4">
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-semibold">Manajemen Keluhan & Feedback</h1>
-          <div className="flex items-center font-medium space-x-2 mt-1 text-sm">
-            <span className="text-hijau">Home</span>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-500">Keluhan</span>
-          </div>
-        </div>
-        <div className="bg-red-100 px-4 py-2 rounded-lg">
-          <span className="text-sm text-gray-600">Belum Ditanggapi</span>
-          <p className="font-bold text-red-500">{unanswered} keluhan</p>
+      {/* Header Gradasi */}
+      <div className="bg-gradient-to-r from-[#9FB2C8] to-[#7A8DA3] rounded-xl p-6 mb-6 text-white">
+        <h1 className="text-2xl font-bold">Manajemen Keluhan & Feedback</h1>
+        <div className="flex items-center gap-2 mt-2 text-sm text-white/80">
+          <span>Home</span>
+          <span>/</span>
+          <span>Keluhan</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mx-5">
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h3 className="font-semibold mb-4 flex items-center"><FaCommentDots className="mr-2 text-hijau" /> Daftar Keluhan Pasien</h3>
+      {/* Stat Card */}
+      <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-4 mb-6 text-white">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm opacity-90">Belum Ditanggapi</p>
+            <p className="text-3xl font-bold">{unanswered}</p>
+          </div>
+          <FaCommentDots className="text-4xl opacity-50" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Daftar Keluhan - Card Gradasi */}
+        <div className="bg-white rounded-xl border border-[#D9DEE3] p-5">
+          <h3 className="font-semibold mb-4 flex items-center text-[#1A1A1A]">
+            <FaCommentDots className="mr-2 text-[#9FB2C8]" /> Daftar Keluhan Pasien
+          </h3>
           {keluhan.map((k) => (
-            <div key={k.id} className="border-b pb-3 mb-3">
+            <div key={k.id} className="border-b border-[#D9DEE3] pb-3 mb-3 last:border-0">
               <div className="flex justify-between items-start">
-                <div>
-                  <p className="font-medium">{k.pasien}</p>
-                  <p className="text-sm text-gray-600 mt-1">{k.keluhan}</p>
-                  <p className="text-xs text-gray-400 mt-1">{k.tanggal}</p>
+                <div className="flex-1">
+                  <p className="font-medium text-[#1A1A1A]">{k.pasien}</p>
+                  <p className="text-sm text-[#7A8DA3] mt-1">{k.keluhan}</p>
+                  <p className="text-xs text-[#7A8DA3] mt-1">{k.tanggal}</p>
                   {k.respon && <p className="text-xs text-green-600 mt-1">✓ Respon: {k.respon}</p>}
                 </div>
                 <div className="text-right">
@@ -54,7 +63,7 @@ export default function KeluhanKlinik() {
                     {k.status === 'proses' ? <><FaSpinner className="inline mr-1 animate-spin" /> Proses</> : <><FaCheckCircle className="inline mr-1" /> Selesai</>}
                   </span>
                   {k.status === 'proses' && (
-                    <button onClick={() => setSelectedKeluhan(k)} className="block mt-2 text-hijau text-sm">
+                    <button onClick={() => setSelectedKeluhan(k)} className="block mt-2 text-[#9FB2C8] text-sm">
                       Tanggapi
                     </button>
                   )}
@@ -64,56 +73,61 @@ export default function KeluhanKlinik() {
           ))}
         </div>
 
-        {selectedKeluhan && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
-              <h3 className="text-xl font-bold mb-2">Tanggapi Keluhan</h3>
-              <p className="text-sm text-gray-600 mb-3">Pasien: {selectedKeluhan.pasien}</p>
-              <p className="text-sm bg-gray-50 p-3 rounded mb-3">"{selectedKeluhan.keluhan}"</p>
-              <textarea 
-                className="w-full p-2 border rounded mb-3" 
-                rows="3" 
-                placeholder="Tulis respon Anda..."
-                value={respon}
-                onChange={(e) => setRespon(e.target.value)}
-              />
-              <div className="flex gap-3">
-                <button onClick={() => updateStatus(selectedKeluhan.id, "selesai", respon)} className="bg-hijau text-white px-4 py-2 rounded flex-1 flex items-center justify-center gap-2">
-                  <FaPaperPlane /> Kirim Respon
-                </button>
-                <button onClick={() => setSelectedKeluhan(null)} className="bg-gray-300 px-4 py-2 rounded flex-1">Batal</button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h3 className="font-semibold mb-4 flex items-center"><FaStar className="mr-2 text-yellow-500" /> ⭐ Survei Kepuasan Pasien (H+1)</h3>
-          <p className="text-sm text-gray-600 mb-4">
+        {/* Survei Kepuasan */}
+        <div className="bg-white rounded-xl border border-[#D9DEE3] p-5">
+          <h3 className="font-semibold mb-4 flex items-center text-[#1A1A1A]">
+            <FaStar className="mr-2 text-yellow-500" /> ⭐ Survei Kepuasan Pasien (H+1)
+          </h3>
+          <p className="text-sm text-[#7A8DA3] mb-4">
             Survei dikirim otomatis 1 hari setelah kunjungan via WhatsApp
           </p>
           <div className="space-y-3">
             {dataPasien.slice(0, 3).map((p) => (
-              <div key={p.id} className="border rounded-lg p-3">
-                <p className="font-medium">{p.nama}</p>
+              <div key={p.id} className="border border-[#D9DEE3] rounded-lg p-3">
+                <p className="font-medium text-[#1A1A1A]">{p.nama}</p>
                 <div className="flex gap-1 mt-2">
                   {[1,2,3,4,5].map((star) => (
                     <button key={star} className="text-yellow-400 text-xl hover:scale-110 transition">★</button>
                   ))}
                 </div>
-                <p className="text-xs text-gray-400 mt-2">Survei dikirim: {new Date().toLocaleDateString()}</p>
+                <p className="text-xs text-[#7A8DA3] mt-2">Survei dikirim: {new Date().toLocaleDateString()}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="mt-4 mx-5 bg-blue-50 rounded-lg p-4 border border-blue-200">
-        <h3 className="font-semibold mb-2">📱 Sistem Notifikasi Otomatis (Service Automation)</h3>
+      {/* Modal Tanggapi Keluhan */}
+      {selectedKeluhan && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
+            <h3 className="text-xl font-bold mb-2 text-[#1A1A1A]">Tanggapi Keluhan</h3>
+            <p className="text-sm text-[#7A8DA3] mb-3">Pasien: {selectedKeluhan.pasien}</p>
+            <p className="text-sm bg-[#F5F7FA] p-3 rounded-lg mb-3">"{selectedKeluhan.keluhan}"</p>
+            <textarea 
+              className="w-full p-3 border border-[#D9DEE3] rounded-lg mb-3 focus:outline-none focus:border-[#9FB2C8]" 
+              rows="3" 
+              placeholder="Tulis respon Anda..."
+              value={respon}
+              onChange={(e) => setRespon(e.target.value)}
+            />
+            <div className="flex gap-3">
+              <button onClick={() => updateStatus(selectedKeluhan.id, "selesai", respon)} className="bg-gradient-to-r from-[#9FB2C8] to-[#7A8DA3] text-white px-4 py-2 rounded-lg flex-1 flex items-center justify-center gap-2">
+                <FaPaperPlane /> Kirim Respon
+              </button>
+              <button onClick={() => setSelectedKeluhan(null)} className="bg-gray-200 px-4 py-2 rounded-lg flex-1">Batal</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Info SA - Gradasi */}
+      <div className="mt-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 border border-[#9FB2C8]/30">
+        <h3 className="font-semibold mb-2 text-[#1A1A1A]">📱 Sistem Notifikasi Otomatis (Service Automation)</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <div className="bg-white rounded p-2">✓ Follow-up pasca tindakan (H+1)</div>
-          <div className="bg-white rounded p-2">✓ Reminder kontrol (H-7, H-3, H-1)</div>
-          <div className="bg-white rounded p-2">✓ Survei kepuasan otomatis (H+1)</div>
+          <div className="bg-white rounded-lg p-2 shadow-sm">✓ Follow-up pasca tindakan (H+1)</div>
+          <div className="bg-white rounded-lg p-2 shadow-sm">✓ Reminder kontrol (H-7, H-3, H-1)</div>
+          <div className="bg-white rounded-lg p-2 shadow-sm">✓ Survei kepuasan otomatis (H+1)</div>
         </div>
       </div>
     </div>

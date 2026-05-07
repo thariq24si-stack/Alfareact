@@ -1,48 +1,53 @@
 import { Outlet, NavLink } from "react-router-dom";
 import { 
-  FaHome, FaUser, FaCalendarAlt, FaMoneyBillWave, 
-  FaCommentDots, FaGift, FaSignOutAlt 
+  FaChartLine, FaUsers, FaCalendarAlt, FaCreditCard, 
+  FaCommentDots, FaGift, FaSignOutAlt, FaTooth 
 } from "react-icons/fa";
 
 export default function KlinikLayout() {
   const menuClass = ({ isActive }) => `
-    flex cursor-pointer items-center rounded-xl p-3 space-x-3 
+    flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200
     ${isActive 
-      ? "text-hijau bg-green-200 font-extrabold" 
-      : "text-gray-600 hover:text-hijau hover:bg-green-200 hover:font-extrabold"
+      ? "bg-[#9FB2C8] text-white shadow-sm" 
+      : "text-[#1A1A1A] hover:bg-[#D9DEE3]"
     }
   `;
 
   const menuItems = [
-    { path: "/klinik", name: "Dashboard", icon: FaHome },
-    { path: "/klinik/pasien", name: "Data Pasien", icon: FaUser },
+    { path: "/klinik", name: "Dashboard", icon: FaChartLine },
+    { path: "/klinik/pasien", name: "Data Pasien", icon: FaUsers },
     { path: "/klinik/jadwal", name: "Penjadwalan", icon: FaCalendarAlt },
-    { path: "/klinik/pembayaran", name: "Pembayaran", icon: FaMoneyBillWave },
+    { path: "/klinik/pembayaran", name: "Pembayaran", icon: FaCreditCard },
     { path: "/klinik/keluhan", name: "Keluhan", icon: FaCommentDots },
     { path: "/klinik/loyalitas", name: "Loyalitas", icon: FaGift },
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-[#F5F7FA]">
       {/* SIDEBAR */}
-      <div className="w-72 bg-white shadow-lg flex flex-col p-6">
+      <div className="fixed left-0 top-0 h-full w-64 bg-white border-r border-[#D9DEE3] flex flex-col">
         {/* Logo */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-poppins font-extrabold">
-            Klinik<span className="text-hijau">.</span>
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">Gigi Permata</p>
+        <div className="p-6 border-b border-[#D9DEE3]">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-[#9FB2C8] rounded-lg flex items-center justify-center">
+              <FaTooth className="text-white text-sm" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-[#1A1A1A]">Klinik<span className="text-[#9FB2C8]">.</span></h1>
+              <p className="text-xs text-[#7A8DA3]">Gigi Permata</p>
+            </div>
+          </div>
         </div>
 
         {/* Menu */}
-        <nav className="flex-1">
-          <ul className="space-y-2">
+        <nav className="flex-1 p-4">
+          <ul className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
               return (
                 <li key={item.path}>
                   <NavLink to={item.path} className={menuClass}>
-                    <Icon className="text-xl" />
+                    <Icon className="text-lg" />
                     <span>{item.name}</span>
                   </NavLink>
                 </li>
@@ -52,22 +57,22 @@ export default function KlinikLayout() {
         </nav>
 
         {/* Logout */}
-        <div className="pt-6 border-t">
+        <div className="p-4 border-t border-[#D9DEE3]">
           <button 
             onClick={() => {
               localStorage.removeItem('token');
               window.location.href = '/login';
             }}
-            className="flex cursor-pointer items-center rounded-xl p-3 space-x-3 text-gray-600 hover:text-merah hover:bg-red-100 w-full"
+            className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-[#1A1A1A] hover:bg-[#D9DEE3] w-full transition-all"
           >
-            <FaSignOutAlt className="text-xl" />
+            <FaSignOutAlt className="text-lg" />
             <span>Logout</span>
           </button>
         </div>
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 p-6">
+      <div className="ml-64 flex-1 p-8">
         <Outlet />
       </div>
     </div>

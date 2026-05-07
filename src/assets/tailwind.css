@@ -1,17 +1,12 @@
 @import "tailwindcss";
 
-@font-face {
-    font-family: 'Barlow';
-    src: url('/fonts/Barlow-Regular.ttf');
+@layer base {
+  html, body, *, *::before, *::after {
+    font-family: 'Poppins', sans-serif !important;
+  }
 }
 
-@font-face {
-    font-family: 'Poppins';
-    src: url('/fonts/Poppins-Regular.ttf');
-}
-
-@theme{ 
-    --font-barlow: "Barlow", sans-serif; 
-    --font-poppins: "Poppins", sans-serif; 
-
+body {
+  background-color: #F5F7FA;
+  color: #1A1A1A;
 }
