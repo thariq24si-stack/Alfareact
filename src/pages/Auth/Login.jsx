@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
 import { ImSpinner2 } from "react-icons/im";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaApple, FaMicrosoft } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,10 +17,7 @@ export default function Login() {
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setDataForm({
-      ...dataForm,
-      [name]: value,
-    });
+    setDataForm({ ...dataForm, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -42,8 +41,8 @@ export default function Login() {
           setError(response.data.message);
           return;
         }
-
-        navigate("/");
+        localStorage.setItem("token", response.data.token);
+        navigate("/klinik");
       })
       .catch((err) => {
         if (err.response) {
@@ -58,78 +57,110 @@ export default function Login() {
   };
 
   const errorInfo = error ? (
-    <div className="bg-red-200 mb-5 p-5 text-sm font-light text-gray-600 rounded flex items-center">
-      <BsFillExclamationDiamondFill className="text-red-600 me-2 text-lg" />
+    <div className="bg-red-50 border border-red-200 mb-5 p-3 text-sm text-red-600 rounded-lg flex items-center">
+      <BsFillExclamationDiamondFill className="text-red-500 me-2" />
       {error}
     </div>
   ) : null;
 
   const loadingInfo = loading ? (
-    <div className="bg-gray-200 mb-5 p-5 text-sm rounded flex items-center">
-      <ImSpinner2 className="me-2 animate-spin" />
+    <div className="bg-gray-100 border border-gray-200 mb-5 p-3 text-sm rounded-lg flex items-center justify-center">
+      <ImSpinner2 className="me-2 animate-spin text-[#9FB2C8]" />
       Mohon Tunggu...
     </div>
   ) : null;
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
-        Welcome Back 👋
-      </h2>
+      {/* Welcome Text */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-[#1A1A1A]">Welcome Back 🎉</h1>
+        <p className="text-[#7A8DA3] text-sm mt-2">
+          Today is a new day. It's your day. You shape it.
+          <br />
+          Sign in to start managing your clinic.
+        </p>
+      </div>
 
       {errorInfo}
       {loadingInfo}
 
+      {/* Form */}
       <form onSubmit={handleSubmit}>
-        {/* EMAIL */}
         <div className="mb-5">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address
+          <label className="block text-sm font-medium text-[#1A1A1A] mb-2">
+            Email
           </label>
           <input
             type="text"
-            id="email"
             name="email"
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400"
-            placeholder="you@example.com"
+            className="w-full px-4 py-3 bg-[#F5F7FA] border border-[#D9DEE3] rounded-xl focus:outline-none focus:border-[#9FB2C8] focus:ring-1 focus:ring-[#9FB2C8] transition-all"
+            placeholder="Example@email.com"
           />
         </div>
 
-        {/* PASSWORD */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="mb-3">
+          <label className="block text-sm font-medium text-[#1A1A1A] mb-2">
             Password
           </label>
           <input
             type="password"
-            id="password"
             name="password"
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400"
-            placeholder="********"
+            className="w-full px-4 py-3 bg-[#F5F7FA] border border-[#D9DEE3] rounded-xl focus:outline-none focus:border-[#9FB2C8] focus:ring-1 focus:ring-[#9FB2C8] transition-all"
+            placeholder="At least 8 characters"
           />
         </div>
 
-        {/* BUTTON */}
+        <div className="text-right mb-6">
+          <Link to="/forgot" className="text-sm text-[#9FB2C8] hover:underline">
+            Forgot Password?
+          </Link>
+        </div>
+
         <button
           type="submit"
-          className="w-full bg-hijau hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+          disabled={loading}
+          className="w-full bg-gradient-to-r from-[#9FB2C8] to-[#7A8DA3] hover:opacity-90 text-white font-semibold py-3 rounded-xl transition-all duration-200"
         >
-          Login
+          {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
-      {/* Link ke Register dan Forgot */}
-      <div className="mt-4 text-center text-sm">
-        <a href="/register" className="text-hijau hover:underline">Daftar Baru</a>
-        <span className="mx-2">|</span>
-        <a href="/forgot" className="text-hijau hover:underline">Lupa Password?</a>
+      {/* Or separator */}
+      <div className="flex items-center my-6">
+        <div className="flex-1 h-px bg-[#D9DEE3]"></div>
+        <span className="px-4 text-sm text-[#7A8DA3]">Or</span>
+        <div className="flex-1 h-px bg-[#D9DEE3]"></div>
       </div>
 
-      {/* Demo credentials */}
-      <p className="text-xs text-gray-400 text-center mt-4">
-        Demo: username: emilys | password: emilyspass
+      {/* Social Login Buttons */}
+      <div className="space-y-3">
+        <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-[#D9DEE3] rounded-xl hover:bg-[#F5F7FA] transition-all">
+          <FcGoogle className="text-xl" />
+          <span className="text-sm text-[#1A1A1A]">Sign in with Google</span>
+        </button>
+        <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-[#D9DEE3] rounded-xl hover:bg-[#F5F7FA] transition-all">
+          <FaFacebook className="text-xl text-blue-600" />
+          <span className="text-sm text-[#1A1A1A]">Sign in with Facebook</span>
+        </button>
+        <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-[#D9DEE3] rounded-xl hover:bg-[#F5F7FA] transition-all">
+          <FaApple className="text-xl text-[#1A1A1A]" />
+          <span className="text-sm text-[#1A1A1A]">Sign in with Apple</span>
+        </button>
+      </div>
+
+      {/* Sign up link */}
+      <p className="text-center text-sm text-[#7A8DA3] mt-8">
+        Don't you have an account?{" "}
+        <Link to="/register" className="text-[#9FB2C8] font-medium hover:underline">
+          Sign up
+        </Link>
+      </p>
+
+      <p className="text-center text-xs text-[#7A8DA3] mt-6">
+        Demo: emilys / emilyspass
       </p>
     </div>
   );

@@ -18,10 +18,9 @@ const Customers = lazy(() => import("./pages/Customers"));
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
 const Forgot = lazy(() => import("./pages/Auth/Forgot"));
-const CustomerDetail = lazy(() => import("./pages/CustomerDetail"))
-const ProductDetail = lazy(() => import("./pages/ProductDetail"))
-const Products = lazy(() => import("./pages/Products"))
-
+const CustomerDetail = lazy(() => import("./pages/CustomerDetail"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Products = lazy(() => import("./pages/Products"));
 
 // 👇 TAMBAHKAN IMPORTS UNTUK KLINIK
 const DashboardKlinik = lazy(() => import("./pages/klinik/DashboardKlinik"));
@@ -30,6 +29,8 @@ const JadwalKlinik = lazy(() => import("./pages/klinik/JadwalKlinik"));
 const PembayaranKlinik = lazy(() => import("./pages/klinik/PembayaranKlinik"));
 const KeluhanKlinik = lazy(() => import("./pages/klinik/Keluhan"));
 const LoyalitasKlinik = lazy(() => import("./pages/klinik/LoyalitasKlinik"));
+const ProductKlinik = lazy(() => import("./pages/klinik/ProductKlinik"));
+const PasienDetail = lazy(() => import("./pages/klinik/PasienDetail"));
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function App() {
                 <Route path="/error/403" element={<Error403 />} />
                 <Route path="/customers/:id" element={<CustomerDetail />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/products" element={<Products />} />
+                <Route path="/products" element={<Products />} />
               </Route>
 
               {/* AUTH ROUTES (Existing) */}
@@ -63,9 +64,17 @@ function App() {
                 <Route path="/klinik" element={<DashboardKlinik />} />
                 <Route path="/klinik/pasien" element={<PasienKlinik />} />
                 <Route path="/klinik/jadwal" element={<JadwalKlinik />} />
-                <Route path="/klinik/pembayaran" element={<PembayaranKlinik />} />
+                <Route
+                  path="/klinik/pembayaran"
+                  element={<PembayaranKlinik />}
+                />
                 <Route path="/klinik/keluhan" element={<KeluhanKlinik />} />
                 <Route path="/klinik/loyalitas" element={<LoyalitasKlinik />} />
+                <Route
+                  path="/klinik/ProductKlinik"
+                  element={<ProductKlinik />}
+                />
+                <Route path="/klinik/pasien/:id" element={<PasienDetail />} />
               </Route>
 
               {/* 404 NOT FOUND */}

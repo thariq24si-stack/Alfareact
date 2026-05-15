@@ -18,7 +18,6 @@ export default function Forgot() {
     setError("");
     setMessage("");
 
-    // Simulasi kirim reset link (bisa dihubungkan ke API nanti)
     setTimeout(() => {
       setMessage(`Link reset password telah dikirim ke ${email}`);
       setLoading(false);
@@ -27,40 +26,36 @@ export default function Forgot() {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-700 mb-2 text-center">
+      <h2 className="text-2xl font-semibold text-[#1A1A1A] mb-2 text-center">
         Forgot Your Password?
       </h2>
       
-      <p className="text-sm text-gray-500 mb-6 text-center">
+      <p className="text-sm text-[#7A8DA3] mb-6 text-center">
         Enter your email address and we'll send you a link to reset your password.
       </p>
 
       {error && (
-        <div className="bg-red-200 mb-5 p-3 text-sm text-red-700 rounded">
+        <div className="bg-red-50 border border-red-200 mb-5 p-3 text-sm text-red-600 rounded-lg">
           {error}
         </div>
       )}
 
       {message && (
-        <div className="bg-green-200 mb-5 p-3 text-sm text-green-700 rounded">
+        <div className="bg-green-50 border border-green-200 mb-5 p-3 text-sm text-green-600 rounded-lg">
           {message}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-5">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-[#1A1A1A] mb-2">
             Email Address
           </label>
           <input
             type="email"
-            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400"
+            className="w-full px-4 py-2.5 bg-[#F5F7FA] border border-[#D9DEE3] rounded-lg focus:outline-none focus:border-[#9FB2C8] focus:ring-1 focus:ring-[#9FB2C8] transition-all"
             placeholder="you@example.com"
             required
           />
@@ -69,14 +64,14 @@ export default function Forgot() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-hijau hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+          className="w-full bg-[#9FB2C8] hover:bg-[#7A8DA3] text-white font-semibold py-2.5 rounded-lg transition-all duration-200"
         >
           {loading ? "Mengirim..." : "Send Reset Link"}
         </button>
       </form>
 
-      <div className="mt-4 text-center text-sm">
-        <a href="/login" className="text-hijau hover:underline">Kembali ke Login</a>
+      <div className="mt-6 text-center text-sm">
+        <a href="/login" className="text-[#9FB2C8] hover:underline">Kembali ke Login</a>
       </div>
     </div>
   );
