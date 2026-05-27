@@ -1,4 +1,3 @@
-// AvatarKlinik.jsx
 
 export default function AvatarKlinik({
   name = "Pasien",

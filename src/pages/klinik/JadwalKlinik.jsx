@@ -229,20 +229,7 @@ export default function JadwalKlinik() {
                     </td>
 
                     <td className="p-3">
-                      <BadgeStatus
-                        type={
-                          j.status ===
-                          "confirmed"
-                            ? "Success"
-                            : "Warning"
-                        }
-                        text={
-                          j.status ===
-                          "confirmed"
-                            ? "Confirmed"
-                            : "Pending"
-                        }
-                      />
+                      <BadgeStatus status={j.status} />
                     </td>
 
                     <td className="p-3">

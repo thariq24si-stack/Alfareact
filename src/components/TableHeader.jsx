@@ -1,4 +1,4 @@
-// TableHeader.jsx
+
 
 export default function TableHeader({
   columns = [],
