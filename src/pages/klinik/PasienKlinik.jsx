@@ -22,6 +22,14 @@ import BadgeStatus from "../../components/BadgeStatus";
 import AvatarKlinik from "../../components/AvatarKlinik";
 import EmptyState from "../../components/EmptyState";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 export default function PasienKlinik() {
   const [pasien, setPasien] = useState(dataPasien);
 
@@ -136,6 +144,27 @@ export default function PasienKlinik() {
       >
         Tambah Pasien
       </ButtonGradient>
+
+      <Dialog>
+          <DialogTrigger asChild>
+            <button className="ml-3 bg-[#7A8DA3] text-white px-4 py-2 rounded-lg">
+              Info Shadcn UI
+            </button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Informasi Pasien Klinik</DialogTitle>
+            </DialogHeader>
+
+            <p>Halaman ini menggunakan komponen Dialog dari Shadcn UI.</p>
+
+            <p>
+              Total Pasien Saat Ini:
+              <strong> {pasien.length}</strong>
+            </p>
+          </DialogContent>
+        </Dialog>
 
       {/* TABLE */}
       <div className="bg-white rounded-xl border border-[#D9DEE3] overflow-hidden">

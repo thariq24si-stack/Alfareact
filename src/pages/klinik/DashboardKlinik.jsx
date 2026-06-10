@@ -14,11 +14,7 @@ import {
   FaHospitalUser,
 } from "react-icons/fa";
 
-import {
-  dataPasien,
-  dataJadwal,
-  dataTransaksi,
-} from "../../data/KlinikData";
+import { dataPasien, dataJadwal, dataTransaksi } from "../../data/KlinikData";
 
 // COMPONENTS
 import PageHeader from "../../components/PageHeader";
@@ -28,6 +24,8 @@ import StatsFlat from "../../components/StatsFlat";
 import CardPutih from "../../components/CardPutih";
 import SectionTitle from "../../components/SectionTitle";
 import BadgeStatus from "../../components/BadgeStatus";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function DashboardKlinik() {
   const [stats, setStats] = useState({
@@ -70,9 +68,7 @@ export default function DashboardKlinik() {
     {
       title: "Active Users",
       value: `${stats.activeUsers}/${stats.totalPasien}`,
-      subValue: `${Math.round(
-        (stats.activeUsers / stats.totalPasien) * 100
-      )}%`,
+      subValue: `${Math.round((stats.activeUsers / stats.totalPasien) * 100)}%`,
       icon: FaUsers,
       trend: "+12%",
       trendUp: true,
@@ -148,10 +144,7 @@ export default function DashboardKlinik() {
       {/* STATS CARD */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {cards.map((card, index) => (
-          <CardGradient
-            key={index}
-            gradient={card.gradient}
-          >
+          <CardGradient key={index} gradient={card.gradient}>
             <div className="flex justify-between items-start mb-3">
               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur">
                 <card.icon className="text-white text-lg" />
@@ -169,13 +162,9 @@ export default function DashboardKlinik() {
             </div>
 
             <div>
-              <p className="text-3xl font-bold text-white">
-                {card.value}
-              </p>
+              <p className="text-3xl font-bold text-white">{card.value}</p>
 
-              <p className="text-xs text-white/70 mt-1">
-                {card.subValue}
-              </p>
+              <p className="text-xs text-white/70 mt-1">{card.subValue}</p>
 
               <p className="text-sm font-medium mt-2 text-white/90">
                 {card.title}
@@ -183,6 +172,34 @@ export default function DashboardKlinik() {
             </div>
           </CardGradient>
         ))}
+      </div>
+
+      {/* SHADCN TABS */}
+      <div className="mb-8">
+        <Tabs defaultValue="pasien" className="w-full">
+          <TabsList>
+            <TabsTrigger value="pasien">Pasien</TabsTrigger>
+
+            <TabsTrigger value="jadwal">Jadwal</TabsTrigger>
+
+            <TabsTrigger value="keuangan">Keuangan</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="pasien">
+            Total pasien terdaftar:
+            <strong> {stats.totalPasien}</strong>
+          </TabsContent>
+
+          <TabsContent value="jadwal">
+            Total kunjungan:
+            <strong> {stats.totalKunjungan}</strong>
+          </TabsContent>
+
+          <TabsContent value="keuangan">
+            Pendapatan:
+            <strong> Rp {stats.pendapatan.toLocaleString()}</strong>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* STATS FLAT */}
@@ -224,11 +241,9 @@ export default function DashboardKlinik() {
         <div className="relative h-48">
           <div className="flex justify-between items-end h-full">
             {monthlyData.map((data, idx) => {
-              const barHeight =
-                (data.aktivitas / maxValue) * chartHeight;
+              const barHeight = (data.aktivitas / maxValue) * chartHeight;
 
-              const targetHeight =
-                (data.target / maxValue) * chartHeight;
+              const targetHeight = (data.target / maxValue) * chartHeight;
 
               return (
                 <div
@@ -280,16 +295,8 @@ export default function DashboardKlinik() {
                 </div>
 
                 <BadgeStatus
-                  status={
-                    j.status === "confirmed"
-                      ? "success"
-                      : "warning"
-                  }
-                  text={
-                    j.status === "confirmed"
-                      ? "Confirmed"
-                      : "Pending"
-                  }
+                  status={j.status === "confirmed" ? "success" : "warning"}
+                  text={j.status === "confirmed" ? "Confirmed" : "Pending"}
                 />
               </div>
             ))}
@@ -303,13 +310,9 @@ export default function DashboardKlinik() {
           <div className="space-y-4 mt-4">
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-[#7A8DA3]">
-                  Customer Satisfaction
-                </span>
+                <span className="text-[#7A8DA3]">Customer Satisfaction</span>
 
-                <span className="font-medium text-[#1A1A1A]">
-                  86%
-                </span>
+                <span className="font-medium text-[#1A1A1A]">86%</span>
               </div>
 
               <div className="w-full bg-[#D9DEE3] rounded-full h-2">
@@ -322,13 +325,9 @@ export default function DashboardKlinik() {
 
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-[#7A8DA3]">
-                  Retention Rate
-                </span>
+                <span className="text-[#7A8DA3]">Retention Rate</span>
 
-                <span className="font-medium text-[#1A1A1A]">
-                  64%
-                </span>
+                <span className="font-medium text-[#1A1A1A]">64%</span>
               </div>
 
               <div className="w-full bg-[#D9DEE3] rounded-full h-2">
@@ -342,13 +341,9 @@ export default function DashboardKlinik() {
             <div className="pt-3 mt-2 border-t border-[#D9DEE3]">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm text-[#7A8DA3]">
-                    Overall Growth
-                  </p>
+                  <p className="text-sm text-[#7A8DA3]">Overall Growth</p>
 
-                  <p className="text-2xl font-bold text-[#1A1A1A]">
-                    +34%
-                  </p>
+                  <p className="text-2xl font-bold text-[#1A1A1A]">+34%</p>
                 </div>
 
                 <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
