@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import "./assets/tailwind.css";
 import NotFound from "./pages/NotFound";
 import Error400 from "./pages/Error400";
@@ -41,7 +41,7 @@ function App() {
             <Routes>
               {/* MAIN LAYOUT ROUTES (Existing) */}
               <Route element={<MainLayout />}>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<DashboardKlinik />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/customers" element={<Customers />} />
                 <Route path="/error/400" element={<Error400 />} />

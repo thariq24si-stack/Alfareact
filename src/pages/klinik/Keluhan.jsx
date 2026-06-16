@@ -196,7 +196,7 @@ export default function Keluhan() {
             <AccordionTrigger>
               Bagaimana proses menanggapi keluhan?
             </AccordionTrigger>
-
+            
             <AccordionContent>
               Admin dapat membuka detail keluhan lalu mengirim respon langsung
               kepada pasien.

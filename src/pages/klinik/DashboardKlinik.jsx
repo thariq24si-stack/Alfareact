@@ -25,7 +25,8 @@ import CardPutih from "../../components/CardPutih";
 import SectionTitle from "../../components/SectionTitle";
 import BadgeStatus from "../../components/BadgeStatus";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } 
+from "@/components/ui/tabs";
 
 export default function DashboardKlinik() {
   const [stats, setStats] = useState({
