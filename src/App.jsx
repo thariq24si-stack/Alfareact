@@ -41,7 +41,7 @@ function App() {
             <Routes>
               {/* MAIN LAYOUT ROUTES (Existing) */}
               <Route element={<MainLayout />}>
-                <Route path="/" element={<DashboardKlinik />} />
+                <Route path="/praktikum" element={<Dashboard />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/customers" element={<Customers />} />
                 <Route path="/error/400" element={<Error400 />} />
@@ -61,7 +61,7 @@ function App() {
 
               {/* 👇 TAMBAHKAN KLINIK ROUTES (BARU) */}
               <Route element={<KlinikLayout />}>
-                <Route path="/klinik" element={<DashboardKlinik />} />
+                <Route path="/" element={<DashboardKlinik />} />
                 <Route path="/klinik/pasien" element={<PasienKlinik />} />
                 <Route path="/klinik/jadwal" element={<JadwalKlinik />} />
                 <Route
