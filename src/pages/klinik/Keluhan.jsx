@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   FaCommentDots,
   FaCheckCircle,
@@ -20,6 +20,16 @@ export default function Keluhan() {
   const [selectedKeluhan, setSelectedKeluhan] = useState(null);
   const [respon, setRespon] = useState("");
 
+  // useRef
+  const textareaRef = useRef(null);
+
+  // useEffect untuk auto focus textarea saat modal terbuka
+  useEffect(() => {
+    if (selectedKeluhan && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [selectedKeluhan]);
+
   const updateStatus = (id, newStatus, responseText = "") => {
     setKeluhan(
       keluhan.map((k) =>
@@ -28,9 +38,11 @@ export default function Keluhan() {
           : k,
       ),
     );
+
     if (responseText) {
       alert(`✅ Respon telah dikirim ke pasien via WhatsApp`);
     }
+
     setSelectedKeluhan(null);
     setRespon("");
   };
@@ -61,12 +73,13 @@ export default function Keluhan() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Daftar Keluhan - Card Gradasi */}
+        {/* Daftar Keluhan */}
         <div className="bg-white rounded-xl border border-[#D9DEE3] p-5">
           <h3 className="font-semibold mb-4 flex items-center text-[#1A1A1A]">
             <FaCommentDots className="mr-2 text-[#9FB2C8]" /> Daftar Keluhan
             Pasien
           </h3>
+
           {keluhan.map((k) => (
             <div
               key={k.id}
@@ -77,27 +90,35 @@ export default function Keluhan() {
                   <p className="font-medium text-[#1A1A1A]">{k.pasien}</p>
                   <p className="text-sm text-[#7A8DA3] mt-1">{k.keluhan}</p>
                   <p className="text-xs text-[#7A8DA3] mt-1">{k.tanggal}</p>
+
                   {k.respon && (
                     <p className="text-xs text-green-600 mt-1">
                       ✓ Respon: {k.respon}
                     </p>
                   )}
                 </div>
+
                 <div className="text-right">
                   <span
-                    className={`text-xs px-2 py-1 rounded ${k.status === "proses" ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"}`}
+                    className={`text-xs px-2 py-1 rounded ${
+                      k.status === "proses"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
+                    }`}
                   >
                     {k.status === "proses" ? (
                       <>
-                        <FaSpinner className="inline mr-1 animate-spin" />{" "}
+                        <FaSpinner className="inline mr-1 animate-spin" />
                         Proses
                       </>
                     ) : (
                       <>
-                        <FaCheckCircle className="inline mr-1" /> Selesai
+                        <FaCheckCircle className="inline mr-1" />
+                        Selesai
                       </>
                     )}
                   </span>
+
                   {k.status === "proses" && (
                     <button
                       onClick={() => setSelectedKeluhan(k)}
@@ -118,9 +139,11 @@ export default function Keluhan() {
             <FaStar className="mr-2 text-yellow-500" /> ⭐ Survei Kepuasan
             Pasien (H+1)
           </h3>
+
           <p className="text-sm text-[#7A8DA3] mb-4">
             Survei dikirim otomatis 1 hari setelah kunjungan via WhatsApp
           </p>
+
           <div className="space-y-3">
             {dataPasien.slice(0, 3).map((p) => (
               <div
@@ -128,6 +151,7 @@ export default function Keluhan() {
                 className="border border-[#D9DEE3] rounded-lg p-3"
               >
                 <p className="font-medium text-[#1A1A1A]">{p.nama}</p>
+
                 <div className="flex gap-1 mt-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -138,6 +162,7 @@ export default function Keluhan() {
                     </button>
                   ))}
                 </div>
+
                 <p className="text-xs text-[#7A8DA3] mt-2">
                   Survei dikirim: {new Date().toLocaleDateString()}
                 </p>
@@ -154,19 +179,25 @@ export default function Keluhan() {
             <h3 className="text-xl font-bold mb-2 text-[#1A1A1A]">
               Tanggapi Keluhan
             </h3>
+
             <p className="text-sm text-[#7A8DA3] mb-3">
               Pasien: {selectedKeluhan.pasien}
             </p>
+
             <p className="text-sm bg-[#F5F7FA] p-3 rounded-lg mb-3">
               "{selectedKeluhan.keluhan}"
             </p>
+
             <textarea
+              ref={textareaRef}
+              
               className="w-full p-3 border border-[#D9DEE3] rounded-lg mb-3 focus:outline-none focus:border-[#9FB2C8]"
               rows="3"
               placeholder="Tulis respon Anda..."
               value={respon}
               onChange={(e) => setRespon(e.target.value)}
             />
+
             <div className="flex gap-3">
               <button
                 onClick={() =>
@@ -176,6 +207,7 @@ export default function Keluhan() {
               >
                 <FaPaperPlane /> Kirim Respon
               </button>
+
               <button
                 onClick={() => setSelectedKeluhan(null)}
                 className="bg-gray-200 px-4 py-2 rounded-lg flex-1"
@@ -196,7 +228,6 @@ export default function Keluhan() {
             <AccordionTrigger>
               Bagaimana proses menanggapi keluhan?
             </AccordionTrigger>
-            
             <AccordionContent>
               Admin dapat membuka detail keluhan lalu mengirim respon langsung
               kepada pasien.
@@ -205,7 +236,6 @@ export default function Keluhan() {
 
           <AccordionItem value="item-2">
             <AccordionTrigger>Apakah respon dikirim otomatis?</AccordionTrigger>
-
             <AccordionContent>
               Ya, sistem dapat mengirim notifikasi WhatsApp kepada pasien.
             </AccordionContent>
@@ -213,7 +243,6 @@ export default function Keluhan() {
 
           <AccordionItem value="item-3">
             <AccordionTrigger>Kapan survei kepuasan dikirim?</AccordionTrigger>
-
             <AccordionContent>
               Survei dikirim otomatis H+1 setelah kunjungan pasien.
             </AccordionContent>
@@ -221,11 +250,12 @@ export default function Keluhan() {
         </Accordion>
       </div>
 
-      {/* Info SA - Gradasi */}
+      {/* Info SA */}
       <div className="mt-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 border border-[#9FB2C8]/30">
         <h3 className="font-semibold mb-2 text-[#1A1A1A]">
           📱 Sistem Notifikasi Otomatis (Service Automation)
         </h3>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
           <div className="bg-white rounded-lg p-2 shadow-sm">
             ✓ Follow-up pasca tindakan (H+1)

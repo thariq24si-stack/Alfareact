@@ -15,7 +15,7 @@ export default function KlinikLayout() {
   `;
 
   const menuItems = [
-    { path: "/klinik", name: "Dashboard", icon: FaChartLine },
+    { path: "/", name: "Dashboard", icon: FaChartLine },
     { path: "/klinik/pasien", name: "Data Pasien", icon: FaUsers },
     { path: "/klinik/jadwal", name: "Penjadwalan", icon: FaCalendarAlt },
     { path: "/klinik/pembayaran", name: "Pembayaran", icon: FaCreditCard },
