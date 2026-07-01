@@ -22,7 +22,7 @@ export default function KlinikLayout() {
   `;
 
   const menuItems = [
-    { path: "/", name: "Dashboard", icon: FaChartLine },
+    { path: "/klinik", name: "Dashboard", icon: FaChartLine },
 
     // CRUD USER SUPABASE
     { path: "/users", name: "Manajemen User", icon: FaUsers },

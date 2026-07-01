@@ -10,7 +10,6 @@ import Error403 from "./pages/Error403";
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 import KlinikLayout from "./layouts/KlinikLayout";
-import { Users } from "lucide-react";
 
 // Existing Pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -22,8 +21,10 @@ const Forgot = lazy(() => import("./pages/Auth/Forgot"));
 const CustomerDetail = lazy(() => import("./pages/CustomerDetail"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Products = lazy(() => import("./pages/Products"));
-
 const UsersPage = lazy(() => import("./pages/UsersPage"));
+
+// Landing Page
+const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 // Klinik Pages
 const DashboardKlinik = lazy(() =>
@@ -56,6 +57,9 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
 
+        {/* LANDING PAGE */}
+        <Route path="/" element={<LandingPage />} />
+
         {/* MAIN LAYOUT */}
         <Route element={<MainLayout />}>
           <Route path="/praktikum" element={<Dashboard />} />
@@ -78,7 +82,7 @@ function App() {
 
         {/* KLINIK */}
         <Route element={<KlinikLayout />}>
-          <Route path="/" element={<DashboardKlinik />} />
+<Route path="/klinik" element={<DashboardKlinik />} />
 
           {/* USERS CRUD */}
           <Route path="/users" element={<UsersPage />} />

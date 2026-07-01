@@ -1,56 +1,62 @@
-import axios from "axios";
-
-const API_URL =
-"https://thovtkpegkfysnzgqxgx.supabase.co/rest/v1/users";
-
-const API_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRob3Z0a3BlZ2tmeXNuemdxeGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDI0NTEsImV4cCI6MjA5Nzg3ODQ1MX0.r7HMxm9cBP-PYHhUINoCJJlW2ALccSpUsjGQq0mK7mg";
-
-const headers = {
-  apikey: API_KEY,
-  Authorization: `Bearer ${API_KEY}`,
-  "Content-Type": "application/json",
-};
+import { supabase } from "./supabase";
 
 export const usersAPI = {
-
+  // Ambil semua user
   async getUsers() {
-    const response = await axios.get(API_URL,{
-      headers,
-    });
-    return response.data;
+    const { data, error } = await supabase
+      .from("users")
+      .select("*");
+
+    if (error) throw error;
+
+    return data;
   },
 
-  async createUser(data) {
-    const response = await axios.post(
-      API_URL,
-      data,
-      { headers }
-    );
-    return response.data;
+  // Login
+  async login(email, password) {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .eq("password", password);
+
+    if (error) throw error;
+
+    return data;
   },
 
-  async updateUser(id,data) {
-    await axios.patch(
-      `${API_URL}?id=eq.${id}`,
-      data,
-      { headers }
-    );
+  // Register
+  async createUser(user) {
+    const { data, error } = await supabase
+      .from("users")
+      .insert([user])
+      .select();
+
+    if (error) throw error;
+
+    return data;
   },
 
+  // Update User
+  async updateUser(id, user) {
+    const { data, error } = await supabase
+      .from("users")
+      .update(user)
+      .eq("id", id)
+      .select();
+
+    if (error) throw error;
+
+    return data;
+  },
+
+  // Delete User
   async deleteUser(id) {
-    await axios.delete(
-      `${API_URL}?id=eq.${id}`,
-      { headers }
-    );
+    const { error } = await supabase
+      .from("users")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
   },
-
-  async login(email,password){
-    const response = await axios.get(
-      `${API_URL}?email=eq.${email}&password=eq.${password}`,
-      { headers }
-    );
-
-    return response.data;
-  }
 };

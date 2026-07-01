@@ -63,12 +63,13 @@ export default function Register() {
       alert("Registrasi berhasil!");
 
       navigate("/login");
-    } catch (err) {
-      console.error(err);
-      setError("Registrasi gagal");
-    } finally {
-      setLoading(false);
-    }
+
+    } 
+    catch (err) {
+  console.error(err);
+  alert(err.message);
+  setError(err.message);
+}
   };
 
   return (
